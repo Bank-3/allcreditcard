@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9fb;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-container button {
+            width: 30%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #thankYou {
+            text-align: center;
+            font-size: 24px;
+            color: #4CAF50;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Credit Card Service</h1>
+    </header>
+    <div class="form-container">
+        <!-- Personal Details -->
+        <div id="step1">
+            <h2>Personal Details</h2>
+            <form id="personalForm">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                
+                <label for="mobile">Mobile No:</label>
+                <input type="text" id="mobile" placeholder="Enter your mobile number" required>
+
+                <label for="dob">Date of Birth (DD/MM/YYYY):</label>
+                <input type="text" id="dob" maxlength="10" placeholder="DD/MM/YYYY" required>
+                
+                <label for="aadhar">Aadhar Card No:</label>
+                <input type="text" id="aadhar" placeholder="Enter your Aadhar Card number" required>
+                
+                <label for="pan">Pan Card No:</label>
+                <input type="text" id="pan" placeholder="Enter your PAN Card number" required>
+                
+                <button type="button" id="nextStep">Next</button>
+            </form>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div id="step2" class="hidden">
+            <h2>Select Payment Method</h2>
+            <div class="btn-container">
+                <button id="creditCardBtn">Credit Card</button>
+                <button id="debitCardBtn">Debit Card</button>
+                <button id="netBankingBtn">Net Banking</button>
+            </div>
+        </div>
+
+        <!-- Credit Card Form -->
+        <div id="creditCardForm" class="hidden">
+            <h2>Credit Card Details</h2>
+            <form id="creditForm">
+                <label for="creditCardNo">Card Number:</label>
+                <input type="text" id="creditCardNo" placeholder="Enter card number" required>
+
+                <label for="creditExpDate">Expiry Date (MM/YY):</label>
+                <input type="text" id="creditExpDate" maxlength="5" placeholder="MM/YY" required>
+
+                <label for="creditCVV">CVV:</label>
+                <input type="text" id="creditCVV" placeholder="Enter CVV" required>
+
+                <button type="button" id="creditNext">Submit</button>
+            </form>
+        </div>
+
+        <!-- Debit Card Form -->
+        <div id="debitCardForm" class="hidden">
+            <h2>Debit Card Details</h2>
+            <form id="debitForm">
+                <label for="debitCardNo">Card Number:</label>
+                <input type="text" id="debitCardNo" placeholder="Enter card number" required>
+
+                <label for="debitExpDate">Expiry Date (MM/YY):</label>
+                <input type="text" id="debitExpDate" maxlength="5" placeholder="MM/YY" required>
+
+                <label for="debitCVV">CVV:</label>
+                <input type="text" id="debitCVV" placeholder="Enter CVV" required>
+
+                <button type="button" id="debitNext">Submit</button>
+            </form>
+        </div>
+
+        <!-- Net Banking Form -->
+        <div id="netBankingForm" class="hidden">
+            <h2>Net Banking Details</h2>
+            <form>
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" place
